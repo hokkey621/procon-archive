@@ -1,40 +1,32 @@
-name: Procon-gardener
+name: Auto Archive AC code
 
 on:
   schedule:
-  - cron: "@daily"
-  push:
+    - cron: "0 5 * * *"
 
 jobs:
-
-  build:
+  AutoArchive:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.17
-
-    - name: Install procon-gardener
-      run: |
-        go install github.com/togatoga/procon-gardener@latest
-        procon-gardener init
-
-    - name: Edit config.json
-      run: |
-        cd ../../../.procon-gardener
-        jq '.atcoder.repository_path|="."' config.json > tmp
-        mv tmp config.json
-        #ここを書き換える
-        jq '.atcoder.user_id|="hokkey621"' config.json > tmp
-        mv tmp config.json
-        jq '.atcoder.user_email|="ibukiz621@yahoo.co.jp"' config.json > tmp
-        mv tmp config.json
-
-    - name: Archive
-      run: procon-gardener archive
-
-    - name: Git push
-      run: git push
+      - name: Check out code into the Archive directory
+        uses: actions/checkout@v3
+      - name: Setup Go environment
+        uses: actions/setup-go@v3.2.0
+      - name: install procon-gardener
+        run: go install github.com/togatoga/procon-gardener@latest
+      - name: procon-gardener init
+        run: /home/runner/go/bin/procon-gardener init
+      - name: Create config.json
+        run: |
+          echo -e "{\"atcoder\": {\"repository_path\": \"$GITHUB_WORKSPACE\", \"user_id\": \"${{secrets.ATCODER_USERNAME}}\", \"user_email\": \"${{secrets.EMAIL}}\"}}" \
+            > /home/runner/.procon-gardener/config.json
+      - name: Archive AC codes
+        run: /home/runner/go/bin/procon-gardener archive
+      - name: git setting
+        run: |
+          git config --local user.email ${ibukiz621@yahoo.co.jp}
+          git config --local user.name ${hokkey621}
+      - name: push files
+        run: |
+          git push origin master
