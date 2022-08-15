@@ -19,13 +19,13 @@ jobs:
         run: /home/runner/go/bin/procon-gardener init
       - name: Create config.json
         run: |
-          echo -e "{\"atcoder\": {\"repository_path\": \"$GITHUB_WORKSPACE\", \"user_id\": \"${{hokkey621}}\", \"user_email\": \"${{ibukiz621@yahoo.co.jp}}\"}}" \
+          echo -e "{\"atcoder\": {\"repository_path\": \"$GITHUB_WORKSPACE\", \"user_id\": \"${{secrets.ATCODER_USERNAME}}\", \"user_email\": \"${{secrets.EMAIL}}\"}}" \
             > /home/runner/.procon-gardener/config.json
       - name: Archive AC codes
         run: /home/runner/go/bin/procon-gardener archive
       - name: git setting
         run: |
-          git config --local user.email ${{ibukiz621@yahoo.co.jp}}
+          git config --local user.email ${{secrets.EMAIL}}
           git config --local user.name ${{github.actor}}
       - name: push files
         run: |
