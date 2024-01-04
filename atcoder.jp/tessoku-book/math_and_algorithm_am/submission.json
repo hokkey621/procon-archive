@@ -1,0 +1,12 @@
+{
+	"id": 49026118,
+	"epoch_second": 1704384815,
+	"problem_id": "math_and_algorithm_am",
+	"contest_id": "tessoku-book",
+	"user_id": "hokki",
+	"language": "C++ 20 (gcc 12.2)",
+	"point": 1000,
+	"length": 1074,
+	"result": "AC",
+	"execution_time": 59
+}
