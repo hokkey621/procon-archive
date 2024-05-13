@@ -14,7 +14,7 @@ jobs:
       - name: Setup Go environment
         uses: actions/setup-go@v3.2.0
       - name: install procon-gardener
-        run: go install github.com/hokkey621/procon-gardener@latest
+        run: go install github.com/togatoga/procon-gardener@latest
       - name: procon-gardener init
         run: /home/runner/go/bin/procon-gardener init
       - name: Create config.json
